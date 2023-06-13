@@ -6,30 +6,27 @@ function solveEquation(a, b, c) {
 		arr.push();
 	} else if (d == 0) {		
 		let oneRoot = -b / (2 * a);
-			arr.push(oneRoot);
+		arr.push(oneRoot);
 	} else if (d > 0) {
 		let firstRoot = (-b + Math.sqrt(d))/(2 * a);
 		let secondRoot = (-b - Math.sqrt(d))/(2 * a);
-			arr.push(firstRoot, secondRoot);		  		
+		arr.push(firstRoot, secondRoot);		  		
 	} 
   return arr; 
 }
-  
-function calculateTotalMortgage(percent, contribution, amount, date) {
-  let totalAmount;
-   if (isNaN(percent)) {
-   return totalAmount = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
- } else if (isNaN(contribution)) {
-   return totalAmount = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
- } else if (isNaN(amount)) {
-   return totalAmount = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
- } 	
- let returnAmountBank = amount - contribution;	
- let date1 = new Date();	
- let diff = Date.parse(date) - Date.parse(date1);
- let creditTerm = Math.ceil(diff / 1000 / 60 / 60 / 24 / 30.5);	
- let P = percent / 12 / 100;
- let monthlyFee = returnAmountBank * (P + (P / (((1 + P) ** creditTerm) - 1)));
-     totalAmount = creditTerm * monthlyFee;				
-   return Number(totalAmount.toFixed(2));	
-}
+  function calculateTotalMortgage(percent, contribution, amount, date) {
+    let totalAmount
+     if (isNaN(percent)) {
+     return totalAmount = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
+   } else if (isNaN(contribution)) {
+     return totalAmount = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
+   } else if (isNaN(amount)) {
+     return totalAmount = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
+   }  
+  const P = percent / 12 / 100;
+  const returnAmountBank = amount - contribution;
+  const monthlyFee = returnAmountBank * (P + (P / (Math.pow((1 + P), date) - 1)));
+  totalAmount = monthlyFee * date;
+  totalAmount = Number(totalAmount.toFixed(2));
+  return totalAmount;
+ }
